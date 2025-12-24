@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Singles Empyre</title>
+
+<style>
+body {
+  margin: 0;
+  background: #0b0b0b;
+  color: #f1f1f1;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.card {
+  width: 90%;
+  max-width: 420px;
+  background: #111;
+  border: 1px solid #8b0000;
+  border-radius: 16px;
+  padding: 24px;
+  text-align: center;
+}
+
+h1 {
+  font-size: 1.4rem;
+  margin-bottom: 10px;
+  color: #b11226;
+}
+
+p {
+  font-size: 1rem;
+}
+
+button {
+  width: 100%;
+  margin-top: 12px;
+  padding: 12px;
+  background: transparent;
+  border: 1px solid #b11226;
+  color: #f1f1f1;
+  border-radius: 10px;
+  font-size: 0.95rem;
+}
+
+button:active {
+  background: #b11226;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card" id="app">
+  <h1>Tu estado sentimental esta Navidad</h1>
+  <p id="question"></p>
+  <div id="answers"></div>
+</div>
+
+<script>
+const questions = [
+  {
+    q: "Cuando alguien te interesa:",
+    a: [
+      {t:"Analizas antes de sentir", v:2},
+      {t:"Te involucras poco a poco", v:1},
+      {t:"Te distancias", v:3}
+    ]
+  },
+  {
+    q: "Tu problema más común:",
+    a: [
+      {t:"Exiges coherencia", v:2},
+      {t:"Pierdes interés rápido", v:3},
+      {t:"Priorizas tu independencia", v:1}
+    ]
+  },
+  {
+    q: "Esta Navidad tú:",
+    a: [
+      {t:"No buscas nada casual", v:2},
+      {t:"No buscas nada serio", v:3},
+      {t:"No buscas nada", v:1}
+    ]
+  }
+];
+
+let i = 0;
+let score = 0;
+
+function render() {
+  document.getElementById("question").textContent = questions[i].q;
+  const a = document.getElementById("answers");
+  a.innerHTML = "";
+  questions[i].a.forEach(o => {
+    const b = document.createElement("button");
+    b.textContent = o.t;
+    b.onclick = () => {
+      score += o.v;
+      i++;
+      i < questions.length ? render() : result();
+    };
+    a.appendChild(b);
+  });
+}
+
+function result() {
+  let r =
+    score <= 4 ? "Independencia prioritaria" :
+    score <= 6 ? "Selectivo por elección" :
+    "Emocionalmente inaccesible";
+
+  document.getElementById("app").innerHTML = `
+    <h1>${r}</h1>
+    <p>No es un defecto. Es una decisión.</p>
+    <br>
+    <strong>SINGLES EMPYRE</strong>
+    <p>Únete.</p>
+  `;
+}
+
+render();
+</script>
+
+</body>
+</html 
